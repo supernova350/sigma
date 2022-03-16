@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model GuildConfig {
+  guild_id               String   @id
+  prefix                 String   @default("!") @db.VarChar(4)
+  disabled_commands      String[]
+  modlogs_channel_id     String   @default("")
+  memberlogs_channel_id  String   @default("")
+  messagelogs_channel_id String   @default("")
+}
+
+enum CaseAction {
+  Role
+  Timeout
+  Kick
+  Ban
+}
+
+model Case {
+  uuid     String     @id @default(uuid())
+  case_id  Int
+  ref_id   Int?
+  action   CaseAction
+  user_id  String
+  guild_id String
+  mod_id   String
+  reason   String?
+  created  DateTime   @default(now())
+  updated  DateTime   @default(now())
+  duration Int?
+}

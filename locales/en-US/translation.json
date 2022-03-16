@@ -1,0 +1,94 @@
+{
+	"argument": {
+		"boolean": {
+			"error": {
+				"unrecognized": "Unrecognized boolean value. I can recognize {{ truthy }} as truthy values, and {{ falsy }} as falsy values."
+			}
+		},
+		"string": {
+			"error": {
+				"required": "The {{ argument }} argument is required.",
+				"min_length": "The argument `{{ arg }}` is too short. It must be at least {{ min_length }} characters long.",
+				"max_length": "The argument `{{ arg }}` is too long. It must be at most {{ max_length }} characters long.",
+				"one_of": "The argument `{{ arg }}` must be one of the following: {{ one_of }}.",
+				"match": "The argument `{{ arg }}` must match the following regular expression: {{ match }}."
+			}
+		},
+		"number": {
+			"error": {
+				"not_a_number": "The value is not a number.",
+				"min": "The value is too small. It must be at least {{ min }}.",
+				"max": "The value is too large. It must be at most {{ max }}.",
+				"one_of": "The value must be one of the following: {{ one_of }}."
+			}
+		},
+		"float": {
+			"error": {
+				"not_a_number": "The value is not a number.",
+				"not_a_float": "The value is not a float.",
+				"min": "The value is too small. It must be at least {{ min }}.",
+				"max": "The value is too large. It must be at most {{ max }}.",
+				"one_of": "The value must be one of the following: {{ one_of }}."
+			}
+		},
+		"integer": {
+			"error": {
+				"not_a_number": "The value is not a number.",
+				"not_an_integer": "The value is not an integer.",
+				"min": "The value is too small. It must be at least {{ min }}.",
+				"max": "The value is too large. It must be at most {{ max }}.",
+				"one_of": "The value must be one of the following: {{ one_of }}."
+			}
+		},
+		"channel": {
+			"error": {
+				"not_found": "Couldn't find the channel. Make sure the channel exists and I have access to it.",
+				"too_broad": "Multiple channels were found. Please be more specific."
+			}
+		},
+		"voice_channel": {
+			"error": {
+				"not_found": "Couldn't find the channel. Make sure the channel exists and I have access to it.",
+				"too_broad": "Multiple channels were found. Please be more specific.",
+				"not_voice": "The channel must be a voice channel."
+			}
+		},
+		"text_channel": {
+			"error": {
+				"not_found": "Couldn't find the channel. Make sure the channel exists and I have access to it.",
+				"too_broad": "Multiple channels were found. Please be more specific.",
+				"not_text": "The channel must be a text channel."
+			}
+		},
+		"role": {
+			"error": {
+				"not_found": "Couldn't find the role. Make sure the role exists and I have access to it.",
+				"too_broad": "Multiple roles were found. Please be more specific."
+			}
+		},
+		"user": {
+			"error": {
+				"not_found": "Couldn't find the user. Make sure the user exists and I have access to it.",
+				"too_broad": "Multiple users were found. Please be more specific."
+			}
+		},
+		"member": {
+			"error": {
+				"not_found": "Couldn't find the member. Make sure the member exists and I have access to it.",
+				"too_broad": "Multiple members were found. Please be more specific."
+			}
+		}
+	},
+	"command": {
+		"enable": {
+			"error": {
+				"not_subcommand": "You can't enable a subcommand. Disable a full command instead."
+			}
+		},
+		"disable": {
+			"error": {
+				"not_subcommand": "You can't disable a subcommand. Disable a full command instead."
+			}
+		}
+	}
+}
