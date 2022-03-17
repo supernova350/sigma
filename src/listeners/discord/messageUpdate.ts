@@ -12,7 +12,5 @@ export default class extends Listener<RunArguments> {
 		});
 	}
 
-	public async run([oldMessage, newMessage]: RunArguments): Promise<void> {
-		await this.client.handleMessageUpdate(oldMessage, newMessage);
-	}
+	public async run([oldMessage, newMessage]: RunArguments): Promise<void> {}
 }

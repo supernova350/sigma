@@ -13,7 +13,7 @@ export default class extends Listener<RunArguments> {
 	}
 
 	public async run([client]: RunArguments): Promise<void> {
-		await this.client.statcord.autopost();
+		await this.client.commandManager.statcord.autopost();
 		console.log('Bot is connected to the Discord Gateway.');
 	}
 }

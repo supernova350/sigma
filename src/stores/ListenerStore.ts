@@ -6,8 +6,8 @@ import Store from '../structures/Store';
 
 @injectable()
 export default class ListenerStore extends Store<Listener> {
-	private emitters: Map<string, EventEmitter>;
-	private client: SigmaClient;
+	protected readonly emitters: Map<string, EventEmitter>;
+	protected readonly client: SigmaClient;
 
 	public constructor(client: SigmaClient, emitters?: Map<string, EventEmitter>) {
 		super();
@@ -19,7 +19,7 @@ export default class ListenerStore extends Store<Listener> {
 		//TODO: Make this configurable (but not essential).
 		this.emitters.set('client', this.client);
 		this.emitters.set('redis', this.client.redis);
-		this.emitters.set('statcord', this.client.statcord);
+		this.emitters.set('statcord', this.client.commandManager.statcord);
 	}
 
 	public async resolveListenerFile(filepath: string): Promise<Listener | undefined> {

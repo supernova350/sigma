@@ -1,6 +1,6 @@
 // TODO: DIRECTLY EXECUTABLE CHECK
 
-import { Guild, GuildMember, Message, Permissions } from 'discord.js';
+import { Guild, GuildMember, Message, PermissionString } from 'discord.js';
 import { container } from 'tsyringe';
 import Module from './Module';
 
@@ -27,8 +27,8 @@ export interface ICommandOptions {
 	subcommands?: string[];
 	parent?: string;
 	args?: ArgumentType[];
-	clientPerms?: Permissions[];
-	userPerms?: Permissions[];
+	clientPerms?: PermissionString[];
+	userPerms?: PermissionString[];
 }
 
 export type ArgumentType =
@@ -53,8 +53,8 @@ export default class Command<ParsedArgs = Record<string, unknown>> extends Modul
 	public readonly args?: ArgumentType[];
 	public readonly ownerOnly?: boolean;
 
-	public readonly clientPerms?: Permissions[];
-	public readonly userPerms?: Permissions[];
+	public readonly clientPerms?: PermissionString[];
+	public readonly userPerms?: PermissionString[];
 
 	protected readonly client: SigmaClient;
 
@@ -132,12 +132,19 @@ export default class Command<ParsedArgs = Record<string, unknown>> extends Modul
 		return missingPerms.length === 0;
 	}
 
-	public missingClientPerms(guild: Guild): Permissions[] {
+	public canClientRun(guild: Guild): boolean {
+		const missing = this.missingClientPerms(guild);
+
+		//If no missing perms, client can run command
+		return missing.length === 0;
+	}
+
+	public missingClientPerms(guild: Guild): PermissionString[] {
 		if (!this.clientPerms) {
-			return [] as Permissions[];
+			return [];
 		}
 
-		const missingPerms: Permissions[] = [];
+		const missingPerms: PermissionString[] = [];
 
 		for (const perm of this.clientPerms) {
 			if (!guild.me?.permissions.has(perm, true)) {
@@ -148,12 +155,12 @@ export default class Command<ParsedArgs = Record<string, unknown>> extends Modul
 		return missingPerms;
 	}
 
-	public missingMemberPerms(member: GuildMember): Permissions[] {
+	public missingMemberPerms(member: GuildMember): PermissionString[] {
 		if (!this.userPerms) {
-			return [] as Permissions[];
+			return [];
 		}
 
-		const missingPerms: Permissions[] = [];
+		const missingPerms: PermissionString[] = [];
 
 		for (const perm of this.userPerms) {
 			if (!member.permissions.has(perm, true)) {
@@ -179,7 +186,7 @@ export default class Command<ParsedArgs = Record<string, unknown>> extends Modul
 	}
 
 	public async reload(): Promise<void> {
-		await this.client.commands.reloadCommand(this as Command);
+		await this.client.commandManager.reloadCommand(this as Command);
 	}
 
 	public isSubcommand(): boolean {

@@ -14,7 +14,7 @@ export default class extends Command<ParsedArgs> {
 
 	public async run(message: Message<true>, guildConfig: GuildConfig, args: ParsedArgs): Promise<void> {
 		const sent = await message.channel.send('Reloading all listeners...');
-		await this.client._listeners.reloadAllListeners();
+		await this.client.listenerManager.reloadAllListeners();
 		await sent.edit('Reloaded all listeners.');
 	}
 }

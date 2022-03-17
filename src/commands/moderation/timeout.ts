@@ -6,6 +6,7 @@ import Case, { CaseAction } from '../../structures/Case';
 import Command from '../../structures/Command';
 import type GuildConfig from '../../structures/GuildConfig';
 import humanizeDuration from 'humanize-duration';
+import RoleUtils from '../../utils/RoleUtils';
 
 interface ParsedArgs {
 	member: GuildMember;
@@ -18,6 +19,8 @@ export default class extends Command<ParsedArgs> {
 		super(__filename, {
 			name: 'timeout',
 			aliases: ['mute'],
+			clientPerms: ['MODERATE_MEMBERS'],
+			userPerms: ['MODERATE_MEMBERS'],
 			args: [
 				new MemberArgument({
 					key: 'member',
@@ -37,6 +40,18 @@ export default class extends Command<ParsedArgs> {
 	}
 
 	public async run(message: Message<true>, guildConfig: GuildConfig, args: ParsedArgs): Promise<void> {
+		if (!RoleUtils.highestRoleCheck(args.member)) {
+			return void (await message.channel.send(`<@${args.member.user.id}> has a higher role than me.`));
+		}
+
+		if (!args.member.moderatable) {
+			return void (await message.channel.send(`<@${args.member.user.id}> is not moderatable.`));
+		}
+
+		if (!args.member.manageable) {
+			return void (await message.channel.send(`<@${args.member.user.id}> is not manageable.`));
+		}
+
 		const caseData = await Case.create({
 			action: CaseAction.Timeout,
 			userID: args.member.id,

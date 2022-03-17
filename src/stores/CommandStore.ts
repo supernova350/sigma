@@ -4,9 +4,9 @@ import Command from '../structures/Command';
 import Store from '../structures/Store';
 
 export default class CommandStore extends Store<Command> {
-	private client: SigmaClient;
+	protected readonly client: SigmaClient;
 
-	public constructor(client: SigmaClient) {
+	protected constructor(client: SigmaClient) {
 		super();
 		this.client = client;
 	}
@@ -98,8 +98,11 @@ export default class CommandStore extends Store<Command> {
 			return command;
 		}
 
+		console.log(this.store);
+
 		//Check aliases
 		for (const [id, command] of Object.entries(this.store) as [string, Command][]) {
+			console.log(command.aliases);
 			if (command.aliases?.includes(name)) {
 				return command;
 			}

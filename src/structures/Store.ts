@@ -27,4 +27,14 @@ export default class Store<ItemType> {
 		}
 		return filtered;
 	}
+
+	//Write a method to find a value in this.store by a predicate function and return the value.
+	public find(predicate: (item: ItemType) => boolean): ItemType | undefined {
+		for (const [key, value] of this.store) {
+			if (predicate(value)) {
+				return value;
+			}
+		}
+		return undefined;
+	}
 }

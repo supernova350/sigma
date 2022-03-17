@@ -8,6 +8,8 @@ import { container } from 'tsyringe';
 import { PrismaClient } from '@prisma/client';
 import Case, { CaseAction } from './structures/Case';
 
+process.setMaxListeners(20);
+
 const client = new SigmaClient();
 const prisma = new PrismaClient();
 
@@ -15,12 +17,6 @@ container.register(SigmaClient, { useValue: client });
 container.register(PrismaClient, { useValue: prisma });
 
 async function start() {
-	await Case.create({
-		guildID: '951611637956247552',
-		userID: '348477266704990208',
-		modID: '949652124852179014',
-		action: CaseAction.Ban,
-	});
 	await i18next.use(Backend).init({
 		backend: {
 			loadPath: './locales/{{lng}}/{{ns}}.json',
@@ -31,6 +27,7 @@ async function start() {
 		lng: 'en-US',
 		ns: ['translation'],
 	});
+
 	await client.connect();
 }
 

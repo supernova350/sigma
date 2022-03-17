@@ -34,8 +34,8 @@ export default class extends Command<ParsedArgs> {
 	public async run(message: Message<true>, guildConfig: GuildConfig, args: ParsedArgs): Promise<void> {
 		const item =
 			args.type === 'command'
-				? this.client.commands.getCommand(args.item)
-				: this.client._listeners.getListener(args.item);
+				? this.client.commandManager.getCommand(args.item)
+				: this.client.listenerManager.getListener(args.item);
 
 		if (!item) {
 			return void (await message.channel.send(

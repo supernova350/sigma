@@ -22,7 +22,7 @@ export default class extends Command<ParsedArgs> {
 
 	public async run(message: Message<true>, guildConfig: GuildConfig, args: ParsedArgs): Promise<void> {
 		if (args.command) {
-			const command = this.client.commands.getCommand(args.command);
+			const command = this.client.commandManager.getCommand(args.command);
 
 			if (!command) {
 				return void (await message.channel.send(`Command \`${args.command}\` does not exist.`));

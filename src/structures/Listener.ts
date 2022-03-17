@@ -36,6 +36,6 @@ export default class Listener<RunArguments = unknown> extends Module {
 
 	public async reload(): Promise<void> {
 		//We need to cast this to Listener because of the templated arguments.
-		await this.client._listeners.reloadListener(this as Listener);
+		await this.client.listenerManager.reloadListener(this as Listener);
 	}
 }
