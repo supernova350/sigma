@@ -19,6 +19,7 @@ export default class IntegerArgument extends Argument<number, ParseOptions> {
 		}
 
 		const number = Number(parse);
+		console.log(parse, number);
 
 		if (number % 1 !== 0) {
 			return { err: i18next.t<string>(`argument.integer.error.not_an_integer`) };

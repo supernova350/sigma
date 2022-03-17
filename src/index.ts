@@ -16,14 +16,11 @@ container.register(PrismaClient, { useValue: prisma });
 
 async function start() {
 	await Case.create({
-		refID: undefined,
-		action: CaseAction.Timeout,
-		userID: '123',
-		guildID: '123',
-		modID: '123',
-		reason: '123',
+		guildID: '951611637956247552',
+		userID: '348477266704990208',
+		modID: '949652124852179014',
+		action: CaseAction.Ban,
 	});
-	await client.connect();
 	await i18next.use(Backend).init({
 		backend: {
 			loadPath: './locales/{{lng}}/{{ns}}.json',
@@ -34,6 +31,7 @@ async function start() {
 		lng: 'en-US',
 		ns: ['translation'],
 	});
+	await client.connect();
 }
 
 start();

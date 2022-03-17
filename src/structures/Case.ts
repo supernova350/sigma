@@ -72,6 +72,10 @@ export default class Case {
 	}
 
 	public async deleteCase(): Promise<void> {
+		if (this.isDeleted) {
+			throw new Error('Case is deleted.');
+		}
+
 		const prisma = container.resolve<PrismaClient>(PrismaClient);
 
 		this.updated = new Date();
@@ -85,9 +89,13 @@ export default class Case {
 		this.isDeleted = true;
 	}
 
-	public async updateRefID(newRefID: number): Promise<this> {
+	public async updateReference(refID: number): Promise<boolean | this> {
 		if (this.isDeleted) {
 			throw new Error('Case is deleted.');
+		}
+
+		if (refID === this.refID) {
+			return false;
 		}
 
 		const prisma = container.resolve<PrismaClient>(PrismaClient);
@@ -99,7 +107,7 @@ export default class Case {
 				uuid: this.uuid,
 			},
 			data: {
-				ref_id: newRefID,
+				ref_id: refID,
 				updated: this.updated,
 			},
 		});
@@ -107,9 +115,13 @@ export default class Case {
 		return this;
 	}
 
-	public async updateAction(action: CaseAction): Promise<this> {
+	public async updateAction(action: CaseAction): Promise<boolean | this> {
 		if (this.isDeleted) {
 			throw new Error('Case is deleted.');
+		}
+
+		if (action === this.action) {
+			return false;
 		}
 
 		const prisma = container.resolve(PrismaClient);

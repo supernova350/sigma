@@ -120,9 +120,26 @@ export default class SigmaClient extends Client<true> {
 		let toShift = 0;
 
 		for (let i = 0; i < args.length; i++) {
-			if (command.subcommands?.includes(args[i].toLowerCase())) {
-				command = this.commands.getCommand(`${command?.id}-${args[i]}`);
-				toShift++;
+			let foundSubcommandAlias = false;
+			if (command.subcommands) {
+				for (const subcommandName of command.subcommands) {
+					const subcommand = this.commands.getCommand(`${command.id}-${subcommandName}`);
+
+					if (!(subcommand && subcommand.aliases)) {
+						continue;
+					}
+
+					if (subcommand.aliases.includes(args[i])) {
+						foundSubcommandAlias = true;
+						command = subcommand;
+						toShift++;
+					}
+				}
+
+				if (!foundSubcommandAlias && command.subcommands?.includes(args[i].toLowerCase())) {
+					command = this.commands.getCommand(`${command?.id}-${args[i]}`);
+					toShift++;
+				}
 			}
 
 			if (!command) {
