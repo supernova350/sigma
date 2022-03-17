@@ -17,14 +17,6 @@ export default class StringArgument extends Argument<string, ParseOptions> {
 	public async parse(message: Message<true>, parse: string): Promise<ParseOutput<string>> {
 		const lower = parse.toLowerCase();
 
-		if (!parse.length && this.required) {
-			return {
-				err: i18next.t<string>('argument.string.error.required', {
-					arg: this.key,
-				}),
-			};
-		}
-
 		if (this.parseOptions) {
 			if (this.parseOptions.minLength && parse.length < this.parseOptions.minLength) {
 				return {

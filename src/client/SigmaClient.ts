@@ -162,6 +162,26 @@ export default class SigmaClient extends Client<true> {
 			return void (await message.channel.send(`Command \`${commandName}\` is disabled in this guild.`));
 		}
 
+		//Message#member has to be non-null, because we check isGuild() above.
+		if (!command.canMemberRun(message.member!)) {
+			//If user is not allowed to run the command, return.
+			return void (await message.channel.send(
+				`You are not allowed to run the command \`${commandName}\`.\nMissing permissions: ${command
+					.missingMemberPerms(message.member!)
+					.join(', ')}`
+			));
+		}
+
+		//Message#guild#me has to be non-null, because we check isGuild() above.
+		if (!command.canMemberRun(message.guild.me!)) {
+			//If bot is not allowed to run the command, return.
+			return void (await message.channel.send(
+				`I am not allowed to run the command \`${commandName}\`.\nMissing permissions: ${command
+					.missingMemberPerms(message.guild.me!)
+					.join(', ')}`
+			));
+		}
+
 		const parsed = await this.parseCommandArgs(message, command, args);
 
 		if (!parsed && command.args?.length) {
@@ -200,7 +220,7 @@ export default class SigmaClient extends Client<true> {
 				return parsed;
 			}
 
-			if (!args[argsIndex] || typeof args[argsIndex] !== 'string') {
+			if (!args[argsIndex] || !args[argsIndex].length || typeof args[argsIndex] !== 'string') {
 				if (!arg.required) {
 					//argsIndex++;
 					continue;
@@ -215,7 +235,7 @@ export default class SigmaClient extends Client<true> {
 			const res = await arg.parse(message, args[argsIndex]);
 
 			if (res.err) {
-				if (!arg.required && command.args.length !== args.length) {
+				if (!arg.required /* && command.args.length !== args.length */) {
 					//argsIndex++;
 					parsed[arg.key] = undefined;
 					continue;

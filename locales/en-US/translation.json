@@ -7,7 +7,6 @@
 		},
 		"string": {
 			"error": {
-				"required": "The {{ argument }} argument is required.",
 				"min_length": "The argument `{{ arg }}` is too short. It must be at least {{ min_length }} characters long.",
 				"max_length": "The argument `{{ arg }}` is too long. It must be at most {{ max_length }} characters long.",
 				"one_of": "The argument `{{ arg }}` must be one of the following: {{ one_of }}.",
@@ -76,6 +75,13 @@
 			"error": {
 				"not_found": "Couldn't find the member. Make sure the member exists and I have access to it.",
 				"too_broad": "Multiple members were found. Please be more specific."
+			}
+		},
+		"duration": {
+			"error": {
+				"not_a_duration": "The value {{value }} is not a duration.",
+				"min": "The value is too small. It must be at least {{ min }}.",
+				"max": "The value is too large. It must be at most {{ max }}."
 			}
 		}
 	},
