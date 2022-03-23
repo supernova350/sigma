@@ -15,6 +15,7 @@ export default class extends Command<ParsedArgs> {
 	public constructor() {
 		super(__filename, {
 			name: 'eval',
+			category: 'Utility',
 			ownerOnly: true,
 			args: [
 				new StringArgument(
@@ -74,8 +75,6 @@ export default class extends Command<ParsedArgs> {
 			value: destroy,
 		});
 
-		console.log(duration);
-
 		if (typeof evaled !== 'string') {
 			evaled = inspect(evaled, { depth: 0 });
 		}
@@ -88,7 +87,7 @@ export default class extends Command<ParsedArgs> {
 
 		return void (await message.reply({
 			content: [
-				'The eval result was over 2000 characters so it has been uploaded as a file.',
+				'The eval result was over 2000 characters so it was uploaded as a file.',
 				`\`${duration.toFixed(2)}\` ms`,
 			].join('\n'),
 			files: [file],

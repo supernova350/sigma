@@ -8,7 +8,7 @@ export default class extends Command<ParsedArgs> {
 	public constructor() {
 		super(__filename, {
 			name: 'set',
-			subcommands: ['modlogs-channel'],
+			subcommands: ['modlogschannel', 'memberlogschannel', 'messagelogschannel'],
 			parent: 'config',
 		});
 	}

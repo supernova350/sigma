@@ -64,8 +64,8 @@ export default class GuildConfig {
 		return true;
 	}
 
-	public getModlogsChannel(): string {
-		return this.modlogsChannelID;
+	public getModlogsChannel(): string | undefined {
+		return this.modlogsChannelID.length > 0 ? this.modlogsChannelID : undefined;
 	}
 
 	public async updateModlogsChannel(channelID: string): Promise<void> {
@@ -83,8 +83,8 @@ export default class GuildConfig {
 		});
 	}
 
-	public getMemberlogsChannel(): string {
-		return this.memberlogsChannelID;
+	public getMemberlogsChannel(): string | undefined {
+		return this.memberlogsChannelID.length > 0 ? this.memberlogsChannelID : undefined;
 	}
 
 	public async updateMemberlogsChannel(channelID: string): Promise<void> {
@@ -102,8 +102,8 @@ export default class GuildConfig {
 		});
 	}
 
-	public getMessagelogsChannel(): string {
-		return this.messagelogsChannelID;
+	public getMessagelogsChannel(): string | undefined {
+		return this.messagelogsChannelID.length > 0 ? this.messagelogsChannelID : undefined;
 	}
 
 	public async updateMessagelogsChannel(channelID: string): Promise<void> {

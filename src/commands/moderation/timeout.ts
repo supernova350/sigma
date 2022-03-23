@@ -19,6 +19,8 @@ export default class extends Command<ParsedArgs> {
 		super(__filename, {
 			name: 'timeout',
 			aliases: ['mute'],
+			category: 'Moderation',
+			examples: ['@supernova', '@supernova 1d spamming', '348477266704990208 spamming', '348477266704990208 7d'],
 			clientPerms: ['MODERATE_MEMBERS'],
 			userPerms: ['MODERATE_MEMBERS'],
 			args: [

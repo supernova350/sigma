@@ -11,6 +11,25 @@ export default class CommandStore extends Store<Command> {
 		this.client = client;
 	}
 
+	public getCategories(): Map<string, string[]> {
+		const categories = new Map<string, string[]>();
+
+		for (const command of this.store.values()) {
+			if (!(!command.isSubcommand() && command.category)) {
+				continue;
+			}
+
+			if (!categories.has(command.category)) {
+				categories.set(command.category, [command.name]);
+				continue;
+			}
+
+			categories.get(command.category)!.push(command.name);
+		}
+
+		return categories;
+	}
+
 	public async resolveCommandFile(filepath: string): Promise<Command | undefined> {
 		if (require.cache[filepath]) {
 			delete require.cache[filepath];
@@ -82,7 +101,7 @@ export default class CommandStore extends Store<Command> {
 	}
 
 	public async reloadAllCommands(): Promise<this> {
-		for (const [id, command] of Object.entries(this.store) as [string, Command][]) {
+		for (const [id, command] of [...this.store.entries()] as [string, Command][]) {
 			await this.reloadCommand(command);
 		}
 
@@ -98,11 +117,8 @@ export default class CommandStore extends Store<Command> {
 			return command;
 		}
 
-		console.log(this.store);
-
 		//Check aliases
-		for (const [id, command] of Object.entries(this.store) as [string, Command][]) {
-			console.log(command.aliases);
+		for (const [id, command] of [...this.store.entries()] as [string, Command][]) {
 			if (command.aliases?.includes(name)) {
 				return command;
 			}

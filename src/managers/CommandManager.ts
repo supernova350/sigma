@@ -1,4 +1,4 @@
-import type { Message } from 'discord.js';
+import { Message, MessageEmbed } from 'discord.js';
 import { Client as StatcordClient } from 'statcord.js';
 import SigmaClient from '../client/SigmaClient';
 import type Command from '../structures/Command';
@@ -112,7 +112,7 @@ export default class CommandManager extends CommandStore {
 			));
 		}
 
-		const parsed = await CommandManager.parseCommandArguments(message, args, command);
+		const parsed = await CommandManager.parseCommandArguments(message, guildConfig, args, command);
 
 		if (!parsed && command.args?.length) {
 			//Don't run the command.
@@ -125,6 +125,7 @@ export default class CommandManager extends CommandStore {
 
 	public static async parseCommandArguments(
 		message: Message<true>,
+		guildConfig: GuildConfig,
 		args: string[],
 		command: Command
 	): Promise<Record<string, unknown> | undefined> {
@@ -153,7 +154,22 @@ export default class CommandManager extends CommandStore {
 
 				//If the argument is required and there are no more arguments,
 				//then we know that they provided an invalid argument.
-				await message.channel.send(`Argument \`${expectedArg.key}\` is required.`);
+
+				const embed = new MessageEmbed()
+					.setColor('AQUA')
+					.addField(
+						'❯ Command Usage',
+						`\`${guildConfig.getPrefix()}${command.id.replaceAll('-', ' ')} ${command.getCommandUsage()}\``
+					)
+					.setDescription(`Please provide a valid \`${expectedArg.key}\` argument.`);
+
+				const commandExamples = command.getCommandExamples(guildConfig.getPrefix());
+
+				if (commandExamples) {
+					embed.addField('❯ Commmand Examples', commandExamples.join('\n'));
+				}
+
+				await message.channel.send({ embeds: [embed] });
 				return undefined;
 			}
 

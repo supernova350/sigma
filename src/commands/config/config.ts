@@ -8,7 +8,9 @@ export default class extends Command<ParsedArgs> {
 	public constructor() {
 		super(__filename, {
 			name: 'config',
-			subcommands: ['set'],
+			aliases: ['cfg'],
+			category: 'Config',
+			subcommands: ['set', 'view'],
 		});
 	}
 

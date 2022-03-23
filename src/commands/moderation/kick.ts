@@ -18,6 +18,7 @@ export default class extends Command<ParsedArgs> {
 	public constructor() {
 		super(__filename, {
 			name: 'kick',
+			category: 'Moderation',
 			clientPerms: ['KICK_MEMBERS'],
 			userPerms: ['KICK_MEMBERS'],
 			args: [

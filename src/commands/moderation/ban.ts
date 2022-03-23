@@ -17,6 +17,7 @@ export default class extends Command<ParsedArgs> {
 	public constructor() {
 		super(__filename, {
 			name: 'ban',
+			category: 'Moderation',
 			clientPerms: ['BAN_MEMBERS'],
 			userPerms: ['BAN_MEMBERS'],
 			args: [

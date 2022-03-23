@@ -16,6 +16,6 @@ export default class extends Listener<RunArguments> {
 			return void console.log('Successful post');
 		}
 
-		console.error(status);
+		//console.error(status);
 	}
 }

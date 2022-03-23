@@ -18,6 +18,7 @@ export default class extends Command<ParsedArgs> {
 	public constructor() {
 		super(__filename, {
 			name: 'role',
+			category: 'Moderation',
 			clientPerms: ['MANAGE_ROLES'],
 			userPerms: ['MANAGE_ROLES'],
 			args: [

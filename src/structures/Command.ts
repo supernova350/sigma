@@ -25,6 +25,7 @@ export interface ICommandOptions {
 	description?: string;
 	ownerOnly?: boolean;
 	subcommands?: string[];
+	examples?: string[];
 	parent?: string;
 	args?: ArgumentType[];
 	clientPerms?: PermissionString[];
@@ -48,7 +49,9 @@ export default class Command<ParsedArgs = Record<string, unknown>> extends Modul
 	public readonly id: string;
 	public readonly name: string;
 	public readonly aliases?: string[];
+	public readonly category?: string;
 	public readonly subcommands?: string[];
+	public readonly examples?: string[];
 	public readonly parent?: string;
 	public readonly args?: ArgumentType[];
 	public readonly ownerOnly?: boolean;
@@ -69,7 +72,9 @@ export default class Command<ParsedArgs = Record<string, unknown>> extends Modul
 		this.id = options.parent ? `${options.parent}-${options.name}` : options.name;
 		this.name = options.name;
 		this.aliases = options.aliases;
+		this.category = options.category;
 		this.subcommands = options.subcommands;
+		this.examples = options.examples;
 		this.parent = options.parent;
 		this.args = options.args;
 		this.ownerOnly = options.ownerOnly;
@@ -95,6 +100,14 @@ export default class Command<ParsedArgs = Record<string, unknown>> extends Modul
 				);
 			}
 		}
+	}
+
+	public getCommandExamples(prefix: string): string[] | undefined {
+		if (!this.examples) {
+			return undefined;
+		}
+
+		return this.examples.map(example => `\`${prefix}${this.id.replaceAll('-', ' ')} ${example}\``);
 	}
 
 	public getCommandUsage(): string | undefined {

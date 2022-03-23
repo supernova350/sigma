@@ -11,6 +11,7 @@ export default class extends Command<ParsedArgs> {
 	public constructor() {
 		super(__filename, {
 			name: 'disable',
+			category: 'Utility',
 			args: [
 				new StringArgument({
 					key: 'command',

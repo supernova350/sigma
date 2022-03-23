@@ -12,7 +12,9 @@ export default class extends Command<ParsedArgs> {
 	public constructor() {
 		super(__filename, {
 			name: 'reload',
-			subcommands: ['allcommands', 'alllisteners', 'all'],
+			category: 'Utility',
+			subcommands: ['commands', 'listeners', 'all'],
+			ownerOnly: true,
 			args: [
 				new StringArgument(
 					{

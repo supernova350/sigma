@@ -8,6 +8,8 @@ export default class extends Command<ParsedArgs> {
 	public constructor() {
 		super(__filename, {
 			name: 'cases',
+			aliases: ['case'],
+			category: 'Cases',
 			subcommands: ['search', 'delete', 'update'],
 		});
 	}
