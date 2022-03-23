@@ -1,4 +1,4 @@
-const REQUIRED_ENV_VARIABLES = ['BOT_TOKEN', 'REDIS_URL', 'OWNER_ID', 'NODE_ENV'] as const;
+const REQUIRED_ENV_VARIABLES = ['BOT_TOKEN', 'REDIS_URL', 'OWNER_ID', 'NODE_ENV', 'SENTRY_DSN'] as const;
 
 for (const envVar of REQUIRED_ENV_VARIABLES) {
 	if (!process.env[envVar] || typeof process.env[envVar] !== 'string') {
@@ -12,6 +12,7 @@ declare global {
 			BOT_TOKEN: string;
 			REDIS_URL: string;
 			STATCORD_API_KEY: string;
+			SENTRY_DSN: string;
 
 			OWNER_ID: string;
 			NODE_ENV: 'dev' | 'prod';

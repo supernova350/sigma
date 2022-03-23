@@ -6,8 +6,8 @@ import i18next from 'i18next';
 import Backend from 'i18next-fs-backend';
 import { container } from 'tsyringe';
 import { PrismaClient } from '@prisma/client';
-import Case, { CaseAction } from './structures/Case';
 
+//Try to prevent memory leaks
 process.setMaxListeners(20);
 
 const client = new SigmaClient();
