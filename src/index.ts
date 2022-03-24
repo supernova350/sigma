@@ -6,6 +6,7 @@ import i18next from 'i18next';
 import Backend from 'i18next-fs-backend';
 import { container } from 'tsyringe';
 import { PrismaClient } from '@prisma/client';
+import logger from './logger';
 
 //Try to prevent memory leaks
 process.setMaxListeners(20);
@@ -30,5 +31,7 @@ async function start() {
 
 	await client.connect();
 }
+
+logger.error(new Error('This is an error'));
 
 start();
