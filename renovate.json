@@ -1,5 +1,12 @@
 {
-  "extends": [
-    "config:base"
-  ]
+	"extends": ["config:base"],
+	"packageRules": [
+		{
+			"description": "Automatically merge minor and patch-level updates",
+			"matchUpdateTypes": ["minor", "patch", "digest", "pin"],
+			"automerge": true,
+			"automergeType": "branch",
+			"requiredStatusChecks": null
+		}
+	]
 }
